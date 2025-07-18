@@ -42,6 +42,7 @@ function App() {
             </button>
             <button
               onMouseEnter={moveNoButton}
+              onTouchStart={moveNoButton}
               style={noBtnStyle}
               className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
             >

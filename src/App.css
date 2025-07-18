@@ -1,21 +1,34 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-family: sans-serif;
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos globales */
+:root {
+  font-family: "Inter", sans-serif;
+}
+@keyframes moveBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1000px 1000px;
+  }
+}
+
+h1 {
+  @apply text-4xl md:text-6xl font-bold mb-6;
+}
+
+h2 {
+  @apply text-3xl font-semibold text-pink-600 mt-6;
 }
 
 .buttons {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  @apply flex gap-6 relative flex-wrap justify-center;
 }
 
 button {
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
+  @apply bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200;
 }

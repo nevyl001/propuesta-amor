@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import parejaImg from "./assets/pareja.jpg";
-
+import felicesImg from "./assets/felices.jpg";
 import "./App.css";
 
 function App() {
@@ -17,9 +18,18 @@ function App() {
     });
   };
 
+  useEffect(() => {
+    if (accepted) {
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 },
+      });
+    }
+  }, [accepted]);
+
   return (
     <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center text-center px-4">
-      {/* Imagen centrada arriba */}
       {!accepted && (
         <img
           src={parejaImg}
@@ -31,18 +41,17 @@ function App() {
       {!accepted ? (
         <>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-            ¿Puedo ser tu Novio? 💖
+            ¿Quieres ser mi novia? 💖
           </h1>
           <div className="flex gap-6 relative flex-wrap justify-center">
             <button
               onClick={() => setAccepted(true)}
               className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
             >
-              Sí 💍
+              Sí 👩‍❤️‍👨
             </button>
             <button
               onMouseEnter={moveNoButton}
-              onTouchStart={moveNoButton}
               style={noBtnStyle}
               className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
             >
@@ -51,9 +60,16 @@ function App() {
           </div>
         </>
       ) : (
-        <h2 className="text-3xl font-semibold text-pink-600 mt-6">
-          ¡Sabía que dirías que sí! 😍
-        </h2>
+        <>
+          <h2 className="text-3xl font-semibold text-pink-600 mt-6">
+            ¡Sabía que dirías que sí! 😍
+          </h2>
+          <img
+            src={felicesImg}
+            alt="Felices"
+            className="w-64 h-64 mt-6 rounded-2xl object-cover shadow-lg"
+          />
+        </>
       )}
     </div>
   );

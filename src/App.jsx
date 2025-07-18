@@ -31,7 +31,7 @@ function App() {
       {!accepted ? (
         <>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-            ¿Quieres ser mi novia? 💖
+            ¿Puedo ser tu Novio? 💖
           </h1>
           <div className="flex gap-6 relative flex-wrap justify-center">
             <button

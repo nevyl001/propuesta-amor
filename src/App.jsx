@@ -123,7 +123,7 @@ function App() {
       ) : (
         <>
           <h2 className="text-3xl font-semibold text-pink-600 mt-6">
-            ¡Sabía que dirías que sí!😍
+            ¡Sabía que dirías que sí!!! 😍
           </h2>
           <img
             src={felicesImg}

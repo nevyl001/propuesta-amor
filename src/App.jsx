@@ -10,7 +10,6 @@ import foto10 from "./assets/foto10.jpg";
 
 import "./App.css";
 
-// ✅ Declaración única de carruselFotos
 const carruselFotos = [foto6, foto7, foto8, foto9, foto10];
 
 function App() {
@@ -19,11 +18,10 @@ function App() {
   const [noBtnStyle, setNoBtnStyle] = useState({});
   const audioRef = useRef(null);
 
-  // 🎵 Reproducir música al primer clic o toque
   useEffect(() => {
     const playMusic = () => {
       if (audioRef.current) {
-        audioRef.current.play().catch((e) => {
+        audioRef.current.play().catch(() => {
           console.log("Autoplay bloqueado, esperando interacción...");
         });
       }
@@ -37,7 +35,6 @@ function App() {
     };
   }, []);
 
-  // 🎉 Confetti cuando dice que sí
   useEffect(() => {
     if (accepted) {
       confetti({
@@ -48,7 +45,6 @@ function App() {
     }
   }, [accepted]);
 
-  // ⏱ Cambio de imagen cada 3.5s
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % carruselFotos.length);
@@ -56,20 +52,19 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // 🙈 Mover botón "No"
   const moveNoButton = () => {
     const x = Math.floor(Math.random() * 300) - 150;
     const y = Math.floor(Math.random() * 300) - 150;
     setNoBtnStyle({
       position: "absolute",
-      transform: `translate(${x}px, ${y}px)`,
-      transition: "transform 0.2s",
+      transform: `translate(${x}px, ${y}px) scale(1.1)`,
+      transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+      zIndex: 50,
     });
   };
 
   return (
     <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center text-center px-4">
-      {/* 🎵 Audio oculto */}
       <audio ref={audioRef} src="/musica.mp3" loop />
 
       {!accepted && (
@@ -85,7 +80,9 @@ function App() {
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-800 mb-6 break-words max-w-xs sm:max-w-md md:max-w-xl">
             ¿Puedo ser tu Novio? 💖
           </h1>
-          <div className="flex gap-6 relative flex-wrap justify-center">
+
+          {/* Contenedor con altura para que el botón "No" nunca desaparezca */}
+          <div className="relative h-32 flex gap-6 flex-wrap justify-center items-center">
             <button
               onClick={() => setAccepted(true)}
               className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
@@ -96,13 +93,13 @@ function App() {
               onMouseEnter={moveNoButton}
               onTouchStart={moveNoButton}
               style={noBtnStyle}
-              className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
+              className="bg-pink-500 hover:scale-90 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
             >
               No 🙈
             </button>
           </div>
 
-          {/* 🎞 Carrusel de imagen grande, una por una */}
+          {/* Carrusel una imagen por una, con fade */}
           <div className="w-full mt-12 flex justify-center">
             <div className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 relative overflow-hidden rounded-2xl shadow-xl">
               {carruselFotos.map((foto, index) => (

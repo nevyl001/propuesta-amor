@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 import parejaImg from "./assets/pareja.jpg";
 import felicesImg from "./assets/felices.jpg";
@@ -7,7 +7,9 @@ import "./App.css";
 function App() {
   const [accepted, setAccepted] = useState(false);
   const [noBtnStyle, setNoBtnStyle] = useState({});
+  const audioRef = useRef(null); // 👈 referencia al audio
 
+  // Mueve el botón "No"
   const moveNoButton = () => {
     const x = Math.floor(Math.random() * 300) - 150;
     const y = Math.floor(Math.random() * 300) - 150;
@@ -18,6 +20,7 @@ function App() {
     });
   };
 
+  // 🎉 Mostrar confeti cuando dice que sí
   useEffect(() => {
     if (accepted) {
       confetti({
@@ -28,8 +31,30 @@ function App() {
     }
   }, [accepted]);
 
+  // ▶️ Reproducir música al primer clic o toque
+  useEffect(() => {
+    const playMusic = () => {
+      if (audioRef.current) {
+        audioRef.current.play().catch((e) => {
+          console.log("Autoplay bloqueado, esperando interacción...");
+        });
+      }
+    };
+
+    window.addEventListener("click", playMusic, { once: true });
+    window.addEventListener("touchstart", playMusic, { once: true });
+
+    return () => {
+      window.removeEventListener("click", playMusic);
+      window.removeEventListener("touchstart", playMusic);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center text-center px-4">
+      {/* 🎵 Audio oculto */}
+      <audio ref={audioRef} src="/musica.mp3" loop />
+
       {!accepted && (
         <img
           src={parejaImg}

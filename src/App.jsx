@@ -2,25 +2,42 @@ import { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 import parejaImg from "./assets/pareja.jpg";
 import felicesImg from "./assets/felices.jpg";
+import foto1 from "./assets/foto1.jpg";
+import foto2 from "./assets/foto2.jpg";
+import foto3 from "./assets/foto3.jpg";
+import foto4 from "./assets/foto4.jpg";
+import foto5 from "./assets/foto5.jpg";
+
 import "./App.css";
 
+// ✅ Declaración única de carruselFotos
+const carruselFotos = [foto1, foto2, foto3, foto4, foto5];
+
 function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [accepted, setAccepted] = useState(false);
   const [noBtnStyle, setNoBtnStyle] = useState({});
-  const audioRef = useRef(null); // 👈 referencia al audio
+  const audioRef = useRef(null);
 
-  // Mueve el botón "No"
-  const moveNoButton = () => {
-    const x = Math.floor(Math.random() * 300) - 150;
-    const y = Math.floor(Math.random() * 300) - 150;
-    setNoBtnStyle({
-      position: "absolute",
-      transform: `translate(${x}px, ${y}px)`,
-      transition: "transform 0.2s",
-    });
-  };
+  // 🎵 Reproducir música al primer clic o toque
+  useEffect(() => {
+    const playMusic = () => {
+      if (audioRef.current) {
+        audioRef.current.play().catch((e) => {
+          console.log("Autoplay bloqueado, esperando interacción...");
+        });
+      }
+    };
+    window.addEventListener("click", playMusic, { once: true });
+    window.addEventListener("touchstart", playMusic, { once: true });
 
-  // 🎉 Mostrar confeti cuando dice que sí
+    return () => {
+      window.removeEventListener("click", playMusic);
+      window.removeEventListener("touchstart", playMusic);
+    };
+  }, []);
+
+  // 🎉 Confetti cuando dice que sí
   useEffect(() => {
     if (accepted) {
       confetti({
@@ -31,24 +48,24 @@ function App() {
     }
   }, [accepted]);
 
-  // ▶️ Reproducir música al primer clic o toque
+  // ⏱ Cambio de imagen cada 3.5s
   useEffect(() => {
-    const playMusic = () => {
-      if (audioRef.current) {
-        audioRef.current.play().catch((e) => {
-          console.log("Autoplay bloqueado, esperando interacción...");
-        });
-      }
-    };
-
-    window.addEventListener("click", playMusic, { once: true });
-    window.addEventListener("touchstart", playMusic, { once: true });
-
-    return () => {
-      window.removeEventListener("click", playMusic);
-      window.removeEventListener("touchstart", playMusic);
-    };
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % carruselFotos.length);
+    }, 3500);
+    return () => clearInterval(interval);
   }, []);
+
+  // 🙈 Mover botón "No"
+  const moveNoButton = () => {
+    const x = Math.floor(Math.random() * 300) - 150;
+    const y = Math.floor(Math.random() * 300) - 150;
+    setNoBtnStyle({
+      position: "absolute",
+      transform: `translate(${x}px, ${y}px)`,
+      transition: "transform 0.2s",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center text-center px-4">
@@ -83,6 +100,24 @@ function App() {
             >
               No 🙈
             </button>
+          </div>
+
+          {/* 🎞 Carrusel de imagen grande, una por una */}
+          <div className="w-full mt-12 flex justify-center">
+            <div className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 relative overflow-hidden rounded-2xl shadow-xl">
+              {carruselFotos.map((foto, index) => (
+                <img
+                  key={index}
+                  src={foto}
+                  alt={`Foto ${index}`}
+                  className={`absolute top-0 left-0 w-full h-full object-cover rounded-2xl transition-opacity duration-1000 ${
+                    index === currentIndex
+                      ? "opacity-100 z-10"
+                      : "opacity-0 z-0"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </>
       ) : (

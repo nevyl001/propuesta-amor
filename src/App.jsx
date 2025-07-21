@@ -65,7 +65,7 @@ function App() {
 
       {!accepted ? (
         <>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-800 mb-6 break-words max-w-xs sm:max-w-md md:max-w-xl">
             ¿Puedo ser tu Novio? 💖
           </h1>
           <div className="flex gap-6 relative flex-wrap justify-center">

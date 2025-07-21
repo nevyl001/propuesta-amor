@@ -127,6 +127,18 @@ function App() {
             alt="Felices"
             className="w-64 h-64 mt-6 rounded-2xl object-cover shadow-lg"
           />
+          {/* 🎉 Texto adicional después del "Sí" */}
+          <div className="mt-6 max-w-xl text-center px-4">
+            <p className="text-2xl font-semibold text-pink-600 mb-4">
+              Este es solo el comienzo... 💖
+            </p>
+            <p className="text-lg sm:text-xl text-rose-500 font-medium leading-relaxed">
+              Gracias por decir que sí. A partir de ahora, prometo hacerte
+              sonreír cada día, abrazarte en los momentos difíciles y celebrar
+              cada instante a tu lado. 💞 Nuestro viaje juntos será el más
+              hermoso que hayamos vivido jamás. 🌈✨
+            </p>
+          </div>
         </>
       )}
     </div>

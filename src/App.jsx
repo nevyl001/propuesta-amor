@@ -136,7 +136,7 @@ function App() {
               Gracias por decir que sí. A partir de ahora, prometo hacerte
               sonreír cada día, abrazarte en los momentos difíciles y celebrar
               cada instante a tu lado. 💞 Nuestro viaje juntos será el más
-              hermoso que hayamos vivido jamás... 🌈✨
+              hermoso que hayamos vivido jamás...🌈✨
             </p>
           </div>
         </>
